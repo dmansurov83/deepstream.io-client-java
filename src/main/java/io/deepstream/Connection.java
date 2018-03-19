@@ -190,7 +190,9 @@ class Connection implements IConnection {
     @ObjectiveCName("onError:")
     void onError(final String error ) {
         this.setState( ConnectionState.ERROR );
-
+        if (this.loginCallback != null){
+            this.loginCallback.loginFailed(Event.CONNECTION_ERROR, "Connection error");
+        }
         /*
          * If the implementation isn't listening on the error event this will throw
          * an error. So let's defer it to allow the reconnection to kick in.
